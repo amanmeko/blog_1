@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Tekkonnectpro IT Services | General Form Elements</title>
+    <title>Amrutam Pharmaceuticals | General Form Elements</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
@@ -67,7 +67,7 @@
             <!-- Brand Logo -->
             <a href="index3.html" class="brand-link">
 
-                <span class="brand-text font-weight-light">Tekkonnectpro IT Services</span>
+                <span class="brand-text font-weight-light">Amrutam Pharmaceuticals</span>
             </a>
 
             <!-- Sidebar -->

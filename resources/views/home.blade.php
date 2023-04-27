@@ -33,7 +33,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Tekkonnectpro IT Services | Starter</title>
+    <title>Amrutam Pharmaceuticals | Starter</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
@@ -73,7 +73,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <!-- Brand Logo -->
             <a href="index3.html" class="brand-link">
 
-                <span class="brand-text font-weight-light">Tekkonnectpro IT Services</span>
+                <span class="brand-text font-weight-light">Amrutam Pharmaceuticals</span>
             </a>
 
             <!-- Sidebar -->
@@ -251,6 +251,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                             <h6 class="card-title"> {{ $post->user->name }} </h6>
 
                                             <p class="card-text"> {{ Str::limit( $post->body , 50) }} </p>
+                                                {!! $post->body !!}
                                             <a href="{{ route('post.show',['slug'=> $post->slug]) }}" class="card-link">Read more</a>
                                         </div>
                                     </div>
