@@ -229,30 +229,41 @@
                                         </thead>
                                         <tbody>
                                             @if (!$categories->isEmpty())
-                                            @foreach ($categories as $category)
-                                                <tr>
-                                                    <td>1.</td>
-                                                    <td>{{ $category->name }}</td>
+                                                @foreach ($categories as $category)
+                                                    <tr>
+                                                        <td>1.</td>
+                                                        <td>{{ $category->name }}</td>
 
-                                                    <td>
-                                                        <div class="text-right">
-                                                            <a href="#" class="btn btn-sm bg-teal">
-                                                                <i class="fas fa-eye"></i>
-                                                            </a>
-                                                            <a href="#" class="btn btn-sm btn-primary">
-                                                                <i class="fas fa-pen"></i>
-                                                            </a>
-                                                            <a href="#" class="btn btn-sm btn-danger">
-                                                                <i class="fas fa-trash "></i>
-                                                            </a>
-                                                        </div>
+                                                        <td>
+                                                            <div class="text-right">
+                                                                <a href="#" class="btn btn-sm bg-teal">
+                                                                    <i class="fas fa-eye"></i>
+                                                                </a>
+                                                                <a href="#" class="btn btn-sm btn-primary"
+                                                                    data-toggle="modal" data-target="#modal-default">
+                                                                    <i class="fas fa-pen"></i>
+                                                                </a>
 
-                                                    </td>
-                                                </tr>
-                                            @endforeach
-                                        @else
-                                            You dont have contacts
-                                        @endif
+                                                                <a href="{{ route('category.destroy', ['category' => $category]) }}"
+                                                                    onclick="event.preventDefault();
+                                                             document.getElementById('category-delete').submit();"
+                                                                    class="btn btn-sm btn-danger">
+                                                                    <i class="fas fa-trash "></i>
+                                                                </a>
+                                                                <form id="category-delete"
+                                                                    action="{{ route('category.destroy', ['category' => $category]) }}"
+                                                                    method="POST" class="d-none">
+                                                                    @method('delete')
+                                                                    @csrf
+                                                                </form>
+                                                            </div>
+
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                            @else
+                                                You dont have contacts
+                                            @endif
 
 
                                         </tbody>
@@ -268,6 +279,38 @@
                     <!-- /.row -->
                 </div><!-- /.container-fluid -->
             </section>
+            <div class="modal fade" id="modal-default">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">update Category</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="{{ route('category.update', ['category' => $category]) }}" method="post">
+                                @csrf
+                                <input name="_method" type="hidden" value="PATCH">
+                                <div class="form-group">
+                                    <label for="name">New Category</label>
+                                    <input type="text" name="name" class="form-control"
+                                        value="{{ $category->name }}" id="name" placeholder="Enter Category">
+                                </div>
+
+                        </div>
+                        <div class="modal-footer justify-content-between">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Save changes</button>
+                        </div>
+
+                        </form>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </div>
+            <!-- /.modal -->
             <!-- /.content -->
         </div>
         <!-- /.content-wrapper -->

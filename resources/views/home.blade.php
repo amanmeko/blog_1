@@ -163,13 +163,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="#" class="nav-link">
+                                    <a href="{{route('category.index')}}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Categories List</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="#" class="nav-link">
+                                    <a href="{{route('category.create')}}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>create Category</p>
                                     </a>

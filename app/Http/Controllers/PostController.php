@@ -68,8 +68,9 @@ class PostController extends Controller
 
 
         $post = Post::where('slug',$slug)->firstOrFail();
+
+        $post = $post->load(['user', 'category', 'comments']);
         // dd( $post);
-        // $post = $post->load(['user', 'category', 'tags', 'comments']);
 
         return view('post.show', compact('post'));
     }
@@ -169,6 +170,20 @@ class PostController extends Controller
         $post->save();
 
         return redirect()->route('post.show',['slug'=>$slug])->with('message','Post Like undo successfully!');
+    }
+
+    public function comment(Request $request, Post $post)
+    {
+        $this->validate($request, ['body' => 'required']);
+
+        $post->comments()->create([
+            'body' => $request->body,
+        ]);
+        // flash()->overlay('Comment successfully created');
+
+        // return redirect("/posts/{$post->slug}");
+
+        return redirect()->route('post.show',['slug'=>$post->slug])->with('message','Comment successfully created!');
     }
 }
 

@@ -71,12 +71,14 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
+        // dd('yes');
         $this->validate($request, ['name' => 'required']);
 
         $category->update($request->all());
-        flash()->overlay('Category updated successfully');
+        // flash()->overlay('Category updated successfully');
 
-        return redirect('/admin/categories');
+        // return redirect('/admin/categories');
+        return redirect()->back();
     }
 
     /**
@@ -88,8 +90,9 @@ class CategoryController extends Controller
     public function destroy(Category $category)
     {
         $category->delete();
-        flash()->overlay('Category deleted successfully');
+        // flash()->overlay('Category deleted successfully');
 
-        return redirect('/admin/categories');
+        // return redirect('/admin/categories');
+        return redirect()->back();
     }
 }

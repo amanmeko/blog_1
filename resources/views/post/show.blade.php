@@ -11,6 +11,9 @@
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="{{ asset('layouts/plugins/fontawesome-free/css/all.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('layouts/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css') }}">
+    <!-- Toastr -->
+    <link rel="stylesheet" href="{{ asset('layouts/plugins/toastr/toastr.min.css') }}">
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('layouts/dist/css/adminlte.min.css') }}">
 </head>
@@ -200,46 +203,18 @@
                 <div class="container-fluid">
                     <div class="row">
                         @if (session()->has('message'))
-                            <div class="px-4 py-4 text-green-800 bg-green-200 border-l-4 border-green-900 rounded">
+                            <div class="toastsDefaultSuccess">
                                 {{ session('message') }}
                             </div>
                         @endif
-                        <!-- left column -->
-                        {{-- <div class="col-md-12">
-                            <!-- general form elements -->
-                            <div class="card card-primary">
-                                <div class="card-header">
-                                    <h3 class="card-title">Blog By</h3> <span class="description"> {{ $post->user->name}} </span>
-                                </div>
-                                <!-- /.card-header -->
-                                <!-- form start -->
-                                <form method="{{ url('category/create') }}" action="post"
-                                    enctype="multipart/form-data">
-                                    @csrf
-
-                                    <div class="card-body">
-                                        <div class="form-group">
-                                            <label for="category">{{ $post->title }}</label>
-                                            <p>{!! $post->body !!}</p>
-                                        </div>
-                                    </div>
-
-                                    <!-- /.card-body -->
-                                    <div class="card-footer">
-                                    </div>
-
-                                </form>
-                            </div>
-                            <!-- /.card -->
-
-                        </div> --}}
 
                         <div class="col-md-12">
                             <!-- Box Comment -->
                             <div class="card card-widget">
                                 <div class="card-header">
                                     <div class="user-block">
-                                        <img class="img-circle" src="../dist/img/user1-128x128.jpg" alt="User Image">
+                                        <img class="img-circle"
+                                            src="{{ asset('layouts/dist/img/user3-128x128.jpg') }}" alt="User Image">
                                         <span class="username"><a href="#">{{ $post->user->name }}</a></span>
                                         <span class="description">Shared publicly -
                                             {{ $post->created_at->diffForHumans() }}</span>
@@ -287,54 +262,45 @@
                                     </div>
 
 
-                                    <span class="float-right text-muted">{{ $post->likeCount }} likes - 3
+                                    <span class="float-right text-muted">{{ $post->likeCount }} likes - {{ count($post->comments)}}
                                         comments</span>
                                 </div>
                                 <!-- /.card-body -->
                                 <div class="card-footer card-comments">
-                                    <div class="card-comment">
-                                        <!-- User image -->
-                                        <img class="img-circle img-sm" src="../dist/img/user3-128x128.jpg"
-                                            alt="User Image">
+                                    @foreach ($post->comments as $comment)
+                                        <div class="card-comment">
+                                            <!-- User image -->
+                                            <img class="img-circle img-sm"
+                                                src="{{ asset('layouts/dist/img/user3-128x128.jpg') }}"
+                                                alt="User Image">
 
-                                        <div class="comment-text">
-                                            <span class="username">
-                                                Maria Gonzales
-                                                <span class="text-muted float-right">8:03 PM Today</span>
-                                            </span><!-- /.username -->
-                                            It is a long established fact that a reader will be distracted
-                                            by the readable content of a page when looking at its layout.
+                                            <div class="comment-text">
+                                                <span class="username">
+                                                    {{ $comment->user->name }}
+                                                    <span
+                                                        class="text-muted float-right">{{ $comment->created_at->diffForHumans() }}</span>
+                                                </span><!-- /.username -->
+                                                {{ $comment->body }}
+                                            </div>
+                                            <!-- /.comment-text -->
                                         </div>
-                                        <!-- /.comment-text -->
-                                    </div>
-                                    <!-- /.card-comment -->
-                                    <div class="card-comment">
-                                        <!-- User image -->
-                                        <img class="img-circle img-sm" src="../dist/img/user4-128x128.jpg"
-                                            alt="User Image">
+                                    @endforeach
 
-                                        <div class="comment-text">
-                                            <span class="username">
-                                                Luna Stark
-                                                <span class="text-muted float-right">8:03 PM Today</span>
-                                            </span><!-- /.username -->
-                                            It is a long established fact that a reader will be distracted
-                                            by the readable content of a page when looking at its layout.
-                                        </div>
-                                        <!-- /.comment-text -->
-                                    </div>
                                     <!-- /.card-comment -->
+
                                 </div>
                                 <!-- /.card-footer -->
                                 <div class="card-footer">
-                                    <form action="#" method="post">
-                                        <img class="img-fluid img-circle img-sm" src="../dist/img/user4-128x128.jpg"
-                                            alt="Alt Text">
+                                    <form action="{{ route('post.comment', ['post' => $post]) }}" method="post">
+                                        @csrf
+                                        <img class="img-fluid img-circle img-sm"
+                                            src="{{ asset('layouts/dist/img/user2-160x160.jpg') }}" alt="Alt Text">
                                         <!-- .img-push is used to add margin to elements next to floating images -->
                                         <div class="img-push">
-                                            <input type="text" class="form-control form-control-sm"
-                                                placeholder="Press enter to post comment">
+                                            <input type="text" name="body" class="form-control form-control-sm"
+                                                placeholder="Press enter to post comment" required>
                                         </div>
+                                        <button class="btn btn-default btn-sm" type="submit">send</button>
                                     </form>
                                 </div>
                                 <!-- /.card-footer -->
@@ -374,12 +340,168 @@
     <script src="{{ asset('layouts/plugins/bs-custom-file-input/bs-custom-file-input.min.js') }}"></script>
     <!-- AdminLTE App -->
     <script src="{{ asset('layouts/dist/js/adminlte.min.js') }}"></script>
+    <!-- SweetAlert2 -->
+    <script src="{{ asset('layouts/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
+    <!-- Toastr -->
+    <script src="{{ asset('layouts/plugins/toastr/toastr.min.js') }}"></script>
     <!-- AdminLTE for demo purposes -->
     <script src="{{ asset('layouts/dist/js/demo.js') }}"></script>
     <!-- Page specific script -->
     <script>
         $(function() {
             bsCustomFileInput.init();
+
+            var Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000
+            });
+
+            $('.swalDefaultSuccess').click(function() {
+                Toast.fire({
+                    icon: 'success',
+                    title: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
+                })
+            });
+            $('.swalDefaultInfo').click(function() {
+                Toast.fire({
+                    icon: 'info',
+                    title: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
+                })
+            });
+            $('.swalDefaultError').click(function() {
+                Toast.fire({
+                    icon: 'error',
+                    title: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
+                })
+            });
+            $('.swalDefaultWarning').click(function() {
+                Toast.fire({
+                    icon: 'warning',
+                    title: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
+                })
+            });
+            $('.swalDefaultQuestion').click(function() {
+                Toast.fire({
+                    icon: 'question',
+                    title: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
+                })
+            });
+
+            $('.toastrDefaultSuccess').click(function() {
+                toastr.success('Lorem ipsum dolor sit amet, consetetur sadipscing elitr.')
+            });
+            $('.toastrDefaultInfo').click(function() {
+                toastr.info('Lorem ipsum dolor sit amet, consetetur sadipscing elitr.')
+            });
+            $('.toastrDefaultError').click(function() {
+                toastr.error('Lorem ipsum dolor sit amet, consetetur sadipscing elitr.')
+            });
+            $('.toastrDefaultWarning').click(function() {
+                toastr.warning('Lorem ipsum dolor sit amet, consetetur sadipscing elitr.')
+            });
+
+            $('.toastsDefaultDefault').click(function() {
+                $(document).Toasts('create', {
+                    title: 'Toast Title',
+                    body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
+                })
+            });
+            $('.toastsDefaultTopLeft').click(function() {
+                $(document).Toasts('create', {
+                    title: 'Toast Title',
+                    position: 'topLeft',
+                    body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
+                })
+            });
+            $('.toastsDefaultBottomRight').click(function() {
+                $(document).Toasts('create', {
+                    title: 'Toast Title',
+                    position: 'bottomRight',
+                    body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
+                })
+            });
+            $('.toastsDefaultBottomLeft').click(function() {
+                $(document).Toasts('create', {
+                    title: 'Toast Title',
+                    position: 'bottomLeft',
+                    body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
+                })
+            });
+            $('.toastsDefaultAutohide').click(function() {
+                $(document).Toasts('create', {
+                    title: 'Toast Title',
+                    autohide: true,
+                    delay: 750,
+                    body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
+                })
+            });
+            $('.toastsDefaultNotFixed').click(function() {
+                $(document).Toasts('create', {
+                    title: 'Toast Title',
+                    fixed: false,
+                    body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
+                })
+            });
+            $('.toastsDefaultFull').click(function() {
+                $(document).Toasts('create', {
+                    body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.',
+                    title: 'Toast Title',
+                    subtitle: 'Subtitle',
+                    icon: 'fas fa-envelope fa-lg',
+                })
+            });
+            $('.toastsDefaultFullImage').click(function() {
+                $(document).Toasts('create', {
+                    body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.',
+                    title: 'Toast Title',
+                    subtitle: 'Subtitle',
+                    image: '../../dist/img/user3-128x128.jpg',
+                    imageAlt: 'User Picture',
+                })
+            });
+            $('.toastsDefaultSuccess').click(function() {
+                $(document).Toasts('create', {
+                    class: 'bg-success',
+                    title: 'Toast Title',
+                    subtitle: 'Subtitle',
+                    body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
+                })
+            });
+            $('.toastsDefaultInfo').click(function() {
+                $(document).Toasts('create', {
+                    class: 'bg-info',
+                    title: 'Toast Title',
+                    subtitle: 'Subtitle',
+                    body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
+                })
+            });
+            $('.toastsDefaultWarning').click(function() {
+                $(document).Toasts('create', {
+                    class: 'bg-warning',
+                    title: 'Toast Title',
+                    subtitle: 'Subtitle',
+                    body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
+                })
+            });
+            $('.toastsDefaultDanger').click(function() {
+                $(document).Toasts('create', {
+                    class: 'bg-danger',
+                    title: 'Toast Title',
+                    subtitle: 'Subtitle',
+                    body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
+                })
+            });
+            $('.toastsDefaultMaroon').click(function() {
+                $(document).Toasts('create', {
+                    class: 'bg-maroon',
+                    title: 'Toast Title',
+                    subtitle: 'Subtitle',
+                    body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
+                })
+            });
+
         });
     </script>
 </body>
