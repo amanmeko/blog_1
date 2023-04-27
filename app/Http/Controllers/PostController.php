@@ -150,5 +150,25 @@ class PostController extends Controller
 
         return redirect('/admin/posts');
     }
+
+    public function likePost($slug)
+    {
+        // $post = Post::find($id);
+        $post = Post::where('slug',$slug)->firstOrFail();
+        $post->like();
+        $post->save();
+
+        return redirect()->route('post.show',['slug'=>$slug])->with('message','Post Like successfully!');
+    }
+
+    public function unlikePost($slug)
+    {
+        // $post = Post::find($id);
+        $post = Post::where('slug',$slug)->firstOrFail();
+        $post->unlike();
+        $post->save();
+
+        return redirect()->route('post.show',['slug'=>$slug])->with('message','Post Like undo successfully!');
+    }
 }
 

@@ -28,8 +28,11 @@ Route::middleware(['auth'])->group(function () {
 
     Route::resource('category', App\Http\Controllers\CategoryController::class);
 
-    Route::resource('post', App\Http\Controllers\PostController::class, ['except' => ['show']]);
+    Route::resource('post', App\Http\Controllers\PostController::class, ['except' => ['show', 'likePost', 'unlike.post']]);
     Route::get('/post/{slug}', [App\Http\Controllers\postController::class,'show'])->name('post.show');
+    Route::post('/like-post/{slug}',[App\Http\Controllers\PostController::class,'likePost'])->name('like.post');
+    Route::post('/unlike-post/{slug}',[App\Http\Controllers\PostController::class,'unlikePost'])->name('unlike.post');
+
 
 });
 

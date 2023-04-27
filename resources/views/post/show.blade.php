@@ -50,7 +50,7 @@
                 <!-- Sidebar user panel (optional) -->
                 <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                     <div class="image">
-                        <img src="{{asset('layouts/dist/img/user2-160x160.jpg')}}" class="img-circle elevation-2"
+                        <img src="{{ asset('layouts/dist/img/user2-160x160.jpg') }}" class="img-circle elevation-2"
                             alt="User Image">
                     </div>
                     <div class="info">
@@ -87,13 +87,13 @@
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="{{ route('category.index') }}" class="nav-link active">
+                                    <a href="{{ route('post.index') }}" class="nav-link active">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Blogs List</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="{{ route('category.create') }}" class="nav-link">
+                                    <a href="{{ route('post.create') }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>create Blog</p>
                                     </a>
@@ -199,8 +199,13 @@
             <section class="content">
                 <div class="container-fluid">
                     <div class="row">
+                        @if (session()->has('message'))
+                            <div class="px-4 py-4 text-green-800 bg-green-200 border-l-4 border-green-900 rounded">
+                                {{ session('message') }}
+                            </div>
+                        @endif
                         <!-- left column -->
-                        <div class="col-md-12">
+                        {{-- <div class="col-md-12">
                             <!-- general form elements -->
                             <div class="card card-primary">
                                 <div class="card-header">
@@ -227,6 +232,114 @@
                             </div>
                             <!-- /.card -->
 
+                        </div> --}}
+
+                        <div class="col-md-12">
+                            <!-- Box Comment -->
+                            <div class="card card-widget">
+                                <div class="card-header">
+                                    <div class="user-block">
+                                        <img class="img-circle" src="../dist/img/user1-128x128.jpg" alt="User Image">
+                                        <span class="username"><a href="#">{{ $post->user->name }}</a></span>
+                                        <span class="description">Shared publicly -
+                                            {{ $post->created_at->diffForHumans() }}</span>
+                                    </div>
+                                    <!-- /.user-block -->
+                                    <div class="card-tools">
+                                        <button type="button" class="btn btn-tool" title="Mark as read">
+                                            <i class="far fa-circle"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                            <i class="fas fa-minus"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-tool" data-card-widget="remove">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                    </div>
+                                    <!-- /.card-tools -->
+                                </div>
+                                <!-- /.card-header -->
+                                <div class="card-body">
+                                    {{-- <img class="img-fluid pad" src="../dist/img/photo2.png" alt="Photo"> --}}
+                                    <h4>{{ $post->title }}</h4>
+                                    <p>{!! $post->body !!}</p>
+                                    {{-- <button type="button" class="btn btn-default btn-sm"><i
+                                            class="fas fa-share"></i> Share</button>
+                                    <button {{ $post->liked() ? 'disabled' : '' }} type="button" class=" btn btn-default btn-sm"><i
+                                            class="far fa-thumbs-up"></i> Like</button>
+                                    <button {{ $post->liked() ? '' : 'disabled' }} type="button" class="btn btn-default btn-sm"><i
+                                            class="far fa-thumbs-down"></i> UnLike</button> --}}
+                                    <div class="row">
+                                        <form action="{{ route('like.post', $post->slug) }}" method="post">
+                                            @csrf
+                                            <button type="submit" {{ $post->liked() ? 'disabled' : '' }}
+                                                type="button" class=" btn btn-default btn-sm"><i
+                                                    class="far fa-thumbs-up"></i> Like</button>
+                                        </form>
+
+
+                                        <form action="{{ route('unlike.post', $post->slug) }}" method="post">
+                                            @csrf
+                                            <button type="submit" {{ $post->liked() ? '' : 'disabled' }}
+                                                type="button" class="btn btn-default btn-sm"><i
+                                                    class="far fa-thumbs-down"></i> UnLike</button>
+                                        </form>
+                                    </div>
+
+
+                                    <span class="float-right text-muted">{{ $post->likeCount }} likes - 3
+                                        comments</span>
+                                </div>
+                                <!-- /.card-body -->
+                                <div class="card-footer card-comments">
+                                    <div class="card-comment">
+                                        <!-- User image -->
+                                        <img class="img-circle img-sm" src="../dist/img/user3-128x128.jpg"
+                                            alt="User Image">
+
+                                        <div class="comment-text">
+                                            <span class="username">
+                                                Maria Gonzales
+                                                <span class="text-muted float-right">8:03 PM Today</span>
+                                            </span><!-- /.username -->
+                                            It is a long established fact that a reader will be distracted
+                                            by the readable content of a page when looking at its layout.
+                                        </div>
+                                        <!-- /.comment-text -->
+                                    </div>
+                                    <!-- /.card-comment -->
+                                    <div class="card-comment">
+                                        <!-- User image -->
+                                        <img class="img-circle img-sm" src="../dist/img/user4-128x128.jpg"
+                                            alt="User Image">
+
+                                        <div class="comment-text">
+                                            <span class="username">
+                                                Luna Stark
+                                                <span class="text-muted float-right">8:03 PM Today</span>
+                                            </span><!-- /.username -->
+                                            It is a long established fact that a reader will be distracted
+                                            by the readable content of a page when looking at its layout.
+                                        </div>
+                                        <!-- /.comment-text -->
+                                    </div>
+                                    <!-- /.card-comment -->
+                                </div>
+                                <!-- /.card-footer -->
+                                <div class="card-footer">
+                                    <form action="#" method="post">
+                                        <img class="img-fluid img-circle img-sm" src="../dist/img/user4-128x128.jpg"
+                                            alt="Alt Text">
+                                        <!-- .img-push is used to add margin to elements next to floating images -->
+                                        <div class="img-push">
+                                            <input type="text" class="form-control form-control-sm"
+                                                placeholder="Press enter to post comment">
+                                        </div>
+                                    </form>
+                                </div>
+                                <!-- /.card-footer -->
+                            </div>
+                            <!-- /.card -->
                         </div>
 
                         <!--/.col (right) -->

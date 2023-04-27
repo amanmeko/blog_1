@@ -1,10 +1,9 @@
 <?php
-
 namespace App\Models;
 
+use Conner\Likeable\Likeable;
 use App\Models\Category;
 use App\Models\Comment;
-// use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -12,12 +11,13 @@ use Illuminate\Support\Str;
 
 class Post extends Model
 {
+    use Likeable;
     protected $fillable = [
         'title',
         'body',
         'user_id',
         'category_id',
-        'slug'
+        'slug',
     ];
 
     protected static function boot()

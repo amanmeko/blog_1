@@ -50,7 +50,7 @@
                 <!-- Sidebar user panel (optional) -->
                 <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                     <div class="image">
-                        <img src="{{asset('layouts/dist/img/user2-160x160.jpg')}}" class="img-circle elevation-2"
+                        <img src="{{ asset('layouts/dist/img/user2-160x160.jpg') }}" class="img-circle elevation-2"
                             alt="User Image">
                     </div>
                     <div class="info">
@@ -75,8 +75,7 @@
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                         data-accordion="false">
-                        <!-- Add icons to the links using the .nav-icon class
-       with font-awesome or any other icon font library -->
+                        <!-- Add icons to the links using the .nav-icon class with font-awesome or any other icon font library -->
                         <li class="nav-item">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
@@ -87,13 +86,13 @@
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="{{route('post.index')}}" class="nav-link">
+                                    <a href="{{ route('post.index') }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Blogs List</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="{{route('post.create')}}" class="nav-link">
+                                    <a href="{{ route('post.create') }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>create Blog</p>
                                     </a>
@@ -133,13 +132,13 @@
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="{{route('category.index')}}" class="nav-link">
+                                    <a href="{{ route('category.index') }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Categories List</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="{{route('category.create')}}" class="nav-link active">
+                                    <a href="{{ route('category.create') }}" class="nav-link active">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>create Category</p>
                                     </a>
@@ -200,6 +199,7 @@
                 <div class="container-fluid">
                     <div class="row">
                         <!-- left column -->
+
                         <div class="col-md-6">
                             <!-- general form elements -->
                             <div class="card card-primary">
@@ -229,6 +229,7 @@
                             <!-- /.card -->
 
                         </div>
+                        
 
                         <!--/.col (right) -->
                     </div>
