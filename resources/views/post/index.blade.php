@@ -288,7 +288,7 @@
                                 </div>
                             </form>
 
-                        </div>
+                        </div> 
                         <!-- /.card-body -->
 
                     </div>

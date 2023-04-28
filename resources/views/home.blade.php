@@ -235,6 +235,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 @elseif (session('error'))
                     <div class="alert alert-danger" role="alert">
                         {{ session('error') }}
+                        
                     </div>
                 @endif
                 <div class="container-fluid">

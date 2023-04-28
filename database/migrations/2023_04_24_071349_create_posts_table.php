@@ -21,7 +21,7 @@ return new class extends Migration
             $table->integer('user_id')->unsigned();
             $table->integer('category_id')->unsigned();
             $table->boolean('is_published')->default(true);
-            $table->timestamps();
+            $table->timestamps(); 
         });
     }
 

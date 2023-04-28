@@ -299,7 +299,7 @@
                                         <div class="img-push">
                                             <input type="text" name="body" class="form-control form-control-sm"
                                                 placeholder="Press enter to post comment" required>
-                                        </div>
+                                        </div> 
                                         <button class="btn btn-default btn-sm" type="submit">send</button>
                                     </form>
                                 </div>

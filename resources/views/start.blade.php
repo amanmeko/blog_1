@@ -50,7 +50,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
                 <span class="brand-text font-weight-light">Amrutam Pharmaceuticals</span>
             </a>
-
+ 
             <!-- Sidebar -->
             <div class="sidebar">
                 <!-- Sidebar user panel (optional) -->
