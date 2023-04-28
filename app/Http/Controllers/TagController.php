@@ -13,6 +13,7 @@ class TagController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    
     public function index()
     {
         $tags = Tag::paginate(10);
@@ -64,6 +65,7 @@ class TagController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
     public function update(Request $request, Tag $tag)
     {
         $this->validate($request, ['name' => 'required']);
