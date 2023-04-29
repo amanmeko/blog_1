@@ -34,8 +34,6 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/like-post/{slug}',[App\Http\Controllers\PostController::class,'likePost'])->name('like.post');
     Route::post('/unlike-post/{slug}',[App\Http\Controllers\PostController::class,'unlikePost'])->name('unlike.post');
     Route::post('/posts/comment/{post}',[App\Http\Controllers\PostController::class,'comment'] )->name('post.comment');
-
-
 });
 
 
